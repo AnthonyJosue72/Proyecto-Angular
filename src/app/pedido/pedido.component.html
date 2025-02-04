@@ -1,0 +1,60 @@
+<div class="container my-4 text-center">
+  <!-- Componente de Logout -->
+  <app-logout></app-logout>
+
+  <!-- Título de la sección -->
+  <h2 class="text-center">Consulta de Pedidos</h2>
+
+  <!-- Tabla de Pedidos centrada y con diseño responsivo -->
+  <div class="table-responsive d-flex justify-content-center">
+    <table class="table table-striped table-bordered w-100">
+      <thead class="table-primary">
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Fecha</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Detalle</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Iteración sobre los pedidos -->
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.idpedido }}</td>
+          <td>{{ pedido.usuarioIdusuario | usuario:usuario }}</td>
+          <td>{{ pedido.fechaHora }}</td>
+          <td>{{ pedido.total | currency }}</td>
+          <td>{{ pedido.estadoIdestado | estado:estado }}</td>
+          <td>
+            <!-- Lista de detalles dentro de cada pedido -->
+            <ul>
+              <li *ngFor="let detalle of pedido.detalles">
+                Cantidad: {{ detalle.cantidad }},
+                Precio: {{ detalle.precio | currency }},
+                Platillo: {{ detalle.platilloIdplatillo | platillo: platillos }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <!-- Botón de Cambiar Estado con opciones en un menú desplegable -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Cambiar estado
+              </button>
+              <ul class="dropdown-menu">
+                <!-- Iteración sobre los estados disponibles -->
+                <li *ngFor="let e of estado">
+                  <a class="dropdown-item" (click)="actualizarEstado(pedido, e.idestado)">
+                    {{ e.nombre }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
